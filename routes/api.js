@@ -20,8 +20,10 @@ router.put('/ninjas', (req, res, next) => {
 });
 
 //GET Method route
-router.delete('/ninjas', (req, res, next) => {
-    res.send({type: 'DELETE METHOD'});
+router.delete('/ninjas/:id', (req, res, next) => {
+    Ninja.findByIdAndRemove({_id: req.params.id}).then((ninja) => { 
+        res.send(ninja);
+    });
 });
 
 //export the route to express app
