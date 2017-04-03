@@ -20,6 +20,11 @@ app.use(bodyParser.json());
 //Middleware for routes
 app.use('/api',routes);
 
+//error handling Middleware
+app.use((err, req, res, next) => {
+    //console.log(err);
+    res.status(422).send({error: err.message});
+});
 //setup port for server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT,function(){
