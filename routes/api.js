@@ -15,8 +15,12 @@ router.post('/ninjas', (req, res, next) => {
 });
 
 //PUT Method route
-router.put('/ninjas', (req, res, next) => {
-    res.send({type: 'PUT METHOD'});
+router.put('/ninjas/:id', (req, res, next) => {
+    Ninja.findByIdAndUpdate({_id: req.params.id}, req.body).then(() => {
+        Ninja.findOne({_id: req.params.id}).then((ninja) => {
+            res.send(ninja);
+        });
+    });
 });
 
 //GET Method route
