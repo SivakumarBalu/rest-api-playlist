@@ -1,13 +1,25 @@
 //import the required Node modules
 const express = require('express');
+//import the router
+const routes = require('./routes/api');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+
 //Create the instance of Express
 const app = express();
 
-//sample route to test
-app.get('/',function(req, res){
-    console.log('GET Method');
-    res.send({name:'Yashi'});
-});
+//connect to DB
+//mongoose.connect('mongodb://siva:celeron@ds147480.mlab.com:47480/express2');
+mongoose.connect('mongodb://localhost:9000/ninjago');
+mongoose.Promise = global.Promise;
+
+//Middleware for bodyParser
+app.use(bodyParser.json());
+
+//Middleware for routes
+app.use('/api',routes);
+
 //setup port for server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT,function(){
