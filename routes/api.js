@@ -4,7 +4,12 @@ const Ninja = require('../models/ninja');
 
 //GET Method route
 router.get('/ninjas', (req, res, next) => {
-    res.send({type: 'GET METHOD'});
+    Ninja.geoNear({
+        type: "Point", 
+        coordinates:[parseFloat(req.query.lng), parseFloat(req.query.lat)]
+    },{maxDistance: 100000, spherical: true}).then((ninjas) => {
+        res.send(ninjas);
+    });
 });
 
 //POST Method route
